@@ -37,7 +37,7 @@ class Design(db.Model):
 
     image_path = db.Column(db.String(255), nullable=False)
     style_theme = db.Column(db.String(100))
-    ai_output_path = db.Column(db.String(255))
+    ai_output = db.Column(db.Text)
 
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 

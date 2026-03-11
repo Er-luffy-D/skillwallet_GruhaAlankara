@@ -10,6 +10,6 @@ class Config:
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-    UPLOAD_FOLDER = os.path.join(BASE_DIR, "uploads")
+    UPLOAD_FOLDER = "static/uploads"
 
     ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif"}

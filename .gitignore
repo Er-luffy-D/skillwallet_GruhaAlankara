@@ -4,6 +4,4 @@ __pycache__/
 instance/
 *.db
 *.pyc
-storage/uploads/
-storage/generated/
-storage/product_assets/
+static/uploads/

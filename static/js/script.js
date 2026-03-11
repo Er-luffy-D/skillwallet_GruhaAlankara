@@ -3,7 +3,6 @@ const canvas = document.getElementById("captureCanvas");
 const captureBtn = document.getElementById("captureBtn");
 const messageBox = document.getElementById("cameraMessage");
 
-// Only run camera logic on the create-design page
 if (video && captureBtn) {
 	let stream;
 
@@ -63,16 +62,24 @@ if (video && captureBtn) {
 		context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
 		canvas.toBlob(
-			function (blob) {
-				console.log("Image captured", blob);
+			async function (blob) {
+				const formData = new FormData();
+				formData.append("image", blob, "capture.jpg");
 
-				const imageURL = URL.createObjectURL(blob);
+				try {
+					const response = await fetch("/upload", {
+						method: "POST",
+						body: formData,
+					});
 
-				const img = document.createElement("img");
-				img.src = imageURL;
-				img.style.width = "200px";
+					if (response.redirected) {
+						window.location.href = response.url;
+					}
+				} catch (error) {
+					console.error("Upload failed:", error);
 
-				document.body.appendChild(img);
+					if (messageBox) messageBox.innerText = "Failed to upload image.";
+				}
 			},
 			"image/jpeg",
 			0.95,

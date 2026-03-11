@@ -5,7 +5,7 @@ from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
 import uuid
-
+from ai_engine import generate_design
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -132,10 +132,13 @@ def upload():
 
         file.save(filepath)
 
+        ai_result = generate_design(filepath, "modern")
+
         new_design = Design(
             user_id=session["user_id"],
             image_path=unique_name,
-            style_theme="default"
+            style_theme="modern",
+            ai_output=str(ai_result)
         )
 
         db.session.add(new_design)
